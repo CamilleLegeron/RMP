@@ -1,0 +1,75 @@
+# depslib dependency file v1.0
+1511971884 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.cpp
+	"camino.h"
+
+1512600142 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"nodo.h"
+
+1512622915 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\main.c
+	"robot.h"
+	<math.h>
+
+1511971884 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.cpp
+	"camino.h"
+
+1512598428 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.c
+	"coordenadas.h"
+
+1512598895 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1512337999 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.c
+	"coordenadas.h"
+
+1512512041 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiante.c
+	"ambiante.h"
+
+1512513824 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiante.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<windows.h>
+	<dos.h>
+	<dir.h>
+	"nodo.h"
+	"coordenadas.h"
+
+1512509624 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\nodo.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1512620031 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.c
+	"camino.h"
+
+1512615413 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\nodo.c
+	"nodo.h"
+
+1512606853 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.c
+	"ambiente.h"
+
+1512606873 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<windows.h>
+	<dos.h>
+	<dir.h>
+	"camino.h"
+	"coordenadas.h"
+
+1512622877 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\robot.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<time.h>
+	"ambiente.h"
+
+1512623212 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\robot.c
+	"robot.h"
+
