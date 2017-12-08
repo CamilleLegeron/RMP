@@ -43,6 +43,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="coordenadas.h" />
+		<Unit filename="hill_climbing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="hill_climbing.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -50,10 +54,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="nodo.h" />
-		<Unit filename="robot.c">
+		<Unit filename="solucion_inicial.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="robot.h" />
+		<Unit filename="solucion_inicial.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

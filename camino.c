@@ -17,14 +17,6 @@ Camino* crearCamino(){
     return c;
 }
 
-Iteracion* crearIteracion(){
-    Iteracion *it;
-    it = malloc(sizeof (Iteracion));
-    it->numero=0;
-    it->solucionActual=NULL;
-    it->vecindario=NULL;
-}
-
 int sumarNodo(Nodo* nodo, Camino *camino){
     LV_Nodo* n = camino->primero;
     LV_Nodo *nuevo_nodo = crearListaVinculadaNodo(nodo);
@@ -62,56 +54,36 @@ int sumarNodo(Nodo* nodo, Camino *camino){
     return 0;
 }
 
-
-void definirSolucionActual(Camino* camino, Iteracion* iteracion){
-    if(iteracion!=NULL){
-        iteracion->solucionActual = camino;
-    }
-}
-
-void sumarVecino(Camino* camino, Iteracion* iteracion){
-    Camino* c = iteracion->vecindario;
-    if(c==NULL){
-        iteracion->vecindario = camino;
-    } else {
-        int salida = 0;
-        while(salida == 0){
-            if(c->siguiente != NULL){
-                c = c->siguiente;
-            } else {
-                c->siguiente = camino;
-                salida = 1;
+void cortarCamino(Camino* camino, Nodo* nodo){
+    LV_Nodo *n = camino->primero;
+    LV_Nodo *n2 = NULL;
+    int cantidadRemovida = 0;
+    bool encontrado = false;
+    while(!encontrado || n!=NULL){
+        if(n->nodo->x == nodo->x && n->nodo->y == nodo->y){
+            visualizarNodo(nodo);
+            visualizarNodo(n->nodo);
+            n2 = n;
+            n=n->siguiente;
+            n2->siguiente = NULL;
+            while(n!=NULL){
+                n2 = n;
+                n=n->siguiente;
+                free(n2);
+                cantidadRemovida++;
             }
+            camino->largo = camino->largo - cantidadRemovida;
+            encontrado = true;
+        } else {
+            n=n->siguiente;
         }
+
     }
 }
 
-Camino* mejorVecino(Iteracion* iteracion){
-    Camino* mejorCamino = NULL;
-    Camino* caminoAProbar = iteracion->vecindario;
-    if(caminoAProbar == NULL){
-        return mejorCamino;
-    }
-    int evaluacion = caminoAProbar->largo;
-    mejorCamino = caminoAProbar;
-    bool terminado = false;
-    while(!terminado){
-        if(caminoAProbar->largo <= evaluacion ){
-            evaluacion = caminoAProbar->largo;
-            mejorCamino = caminoAProbar;
-        }
-        if(caminoAProbar->siguiente == NULL){
-            terminado = true;
-        } else {
-            caminoAProbar = caminoAProbar->siguiente;
-        }
-    }
-    return mejorCamino;
-}
 
 void visualizarCamino(Camino* camino){
-    printf("\n----------- Visializacion de un camino ---------- \n");
-    printf("Largo del camino : %d \n", camino->largo);
+    printf("\nLargo del camino : %d \n", camino->largo);
     LV_Nodo* n = camino->primero;
     printf("[ ");
     while(n!=NULL){
@@ -121,3 +93,15 @@ void visualizarCamino(Camino* camino){
     printf("]\n");
 }
 
+void liberarCamino(Camino*camino){
+    LV_Nodo* n = camino->primero;
+    LV_Nodo* n2;
+    while(n!=NULL){
+        n2=n;
+        n=n->siguiente;
+        //No liberamos el node de n2 porque es un puntero sobre un nodo de la matriz
+        free(n2);
+    }
+    free(camino);
+    camino = NULL;
+}

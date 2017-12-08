@@ -13,7 +13,5 @@ typedef struct Coordenadas{
 void visualizarCoordenadas(Coordenadas c);
 Coordenadas* crearCoordenadas (int x, int y);
 Coordenadas* initializarCoordenadas ();
-bool existe (Coordenadas c);
-//TODO --> poner all funciones
 
 #endif // COORDENADAS_H

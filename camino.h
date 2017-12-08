@@ -8,9 +8,28 @@
 #define CAMINO_H
 
 
+typedef enum Direccion Direccion;
+enum Direccion
+{
+    N = 0, NE = 1, E = 2, SE = 3, S = 4, SO = 5, O = 6, NO = 7
+};
+
+//Orientacion que tiene el robot para ir de una casilla a la siguiente
+//la lista de referencia corresponde a las direcciones no intentadas desde una casilla
+typedef struct Orientacion{
+    Direccion direccion;
+    Direccion direccionIdeal;
+    //i y j permiten avenzar en la buena direccion
+    int i;
+    int j;
+    Direccion* listaReferencia;
+    int tamanoListReferencia;
+}Orientacion;
+
 //Lista vinculada
 typedef struct LV_Nodo{
     Nodo *nodo;
+    Orientacion* orientacion;
     struct LV_Nodo *siguiente;
 }LV_Nodo;
 
@@ -21,21 +40,13 @@ typedef struct Camino{
 	struct Camino *siguiente;
 }Camino;
 
-typedef struct Iteracion{
-    int numero;
-    struct Camino* solucionActual;
-    struct Camino* vecindario;
-}Iteracion;
-
 
 LV_Nodo* crearListaVinculadaNodo(Nodo* nodo);
 Camino* crearCamino();
-Iteracion* crearIteracion();
 int sumarNodo(Nodo* nodo, Camino *camino);
-void definirSolucionActual(Camino* camino, Iteracion* iteracion);
-void sumarVecino(Camino* camino, Iteracion* iteracion);
-Camino* mejorVecino(Iteracion* iteracion);
+void cortarCamino(Camino* camino, Nodo* nodo);
 void visualizarCamino(Camino* camino);
+void liberarCamino(Camino*camino);
 
 
 

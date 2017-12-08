@@ -22,10 +22,9 @@ Ambiente* crearAmbiente (int n, int m, int** matrizInitial, Coordenadas* c_inici
     }
     a->inicio = &a->matriz[c_inicio->x][c_inicio->y];
     a->objetivo = &a->matriz[c_objetivo->x][c_objetivo->y];
-    a->matriz[a->objetivo->x][a->objetivo->y].costo = 0;
+    a->matriz[a->objetivo->x][a->objetivo->y].costo = 1;
     printf("\n Matriz initilizada, llama la funccion recursiva construirMatriz");
-    construirMatriz(a->matriz, n , m , a->objetivo, 1, i, j);
-
+    construirMatriz(a->matriz, n , m , a->objetivo, 2, i, j);
     return a;
 }
 
@@ -97,4 +96,14 @@ void SetColor(int ForgC){
         SetConsoleTextAttribute(hStdOut, wColor);
     }
     return;
+}
+
+void liberarAmbiente(Ambiente* ambiente){
+    int i;
+    for(i=0;i<ambiente->n;i++){
+        free(ambiente->matriz[i]);
+    }
+    free(ambiente->matriz);
+    free(ambiente);
+    ambiente = NULL;
 }

@@ -2,23 +2,23 @@
 1511971884 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.cpp
 	"camino.h"
 
-1512600142 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.h
+1512750962 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	"nodo.h"
 
-1512622915 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\main.c
-	"robot.h"
-	<math.h>
+1512755479 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\main.c
+	"solucion_inicial.h"
+	"hill_climbing.h"
 
 1511971884 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.cpp
 	"camino.h"
 
-1512598428 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.c
+1512706482 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.c
 	"coordenadas.h"
 
-1512598895 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.h
+1512706494 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -39,21 +39,21 @@
 	"nodo.h"
 	"coordenadas.h"
 
-1512509624 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\nodo.h
+1512703623 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\nodo.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 
-1512620031 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.c
+1512750952 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.c
 	"camino.h"
 
-1512615413 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\nodo.c
+1512747314 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\nodo.c
 	"nodo.h"
 
-1512606853 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.c
+1512706443 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.c
 	"ambiente.h"
 
-1512606873 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.h
+1512661868 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -72,4 +72,35 @@
 
 1512623212 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\robot.c
 	"robot.h"
+
+1512703662 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\solucion_inicial.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<time.h>
+	<math.h>
+	"ambiente.h"
+
+1512692534 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\movimiento.c
+	"movimiento.h"
+
+1512693365 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\movimiento.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+	"camino.h"
+
+1512755605 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\solucion_inicial.c
+	"solucion_inicial.h"
+
+1512754384 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\hill_climbing.c
+	"hill_climbing.h"
+
+1512755554 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\hill_climbing.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+	"camino.h"
 

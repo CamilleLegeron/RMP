@@ -19,10 +19,3 @@ Coordenadas* initializarCoordenadas () {
     return coordenadas;
 }
 
-bool existe (Coordenadas c) {
-    if(c.x != -1 && c.y != -1){
-        return true;
-    }
-    return false;
-}
-

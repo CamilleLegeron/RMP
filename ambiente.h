@@ -24,6 +24,7 @@ Ambiente* crearAmbiente (int n, int m, int** matrizInitial, Coordenadas* c_inici
 void construirMatriz (Nodo** matriz, int n, int m, Nodo* actual, int largo, int i, int j);
 bool dentroAmbiente(Ambiente* ambiente, int x, int y);
 void visualizarAmbiente(Ambiente* ambiente);
+void liberarAmbiente(Ambiente* ambiente);
 
 
 #endif // AMBIENTE_H
