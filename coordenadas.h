@@ -10,7 +10,6 @@ typedef struct Coordenadas{
 	int y;
 }Coordenadas;
 
-void visualizarCoordenadas(Coordenadas c);
 Coordenadas* crearCoordenadas (int x, int y);
 Coordenadas* initializarCoordenadas ();
 

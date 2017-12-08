@@ -1,9 +1,11 @@
+#include <time.h>
+
 #include "solucion_inicial.h"
 #include "hill_climbing.h"
 
-#define RESTRART 2
-#define NUM_MAX_IT 5
-#define NUMERO_DE_VECINO 3
+#define RESTRART 1
+#define NUM_MAX_IT 9
+#define NUMERO_DE_VECINO 4
 
 /// TODO : remplacer les c->string = string par strcpy(livre->titre, titre);
 
@@ -15,8 +17,8 @@ int main(int argc, char* argv[])
     ///-------------------INITIALIZACIONES---------------
     FILE* archivoMatriz = NULL;
     FILE* archivoPuntos = NULL;
-    archivoMatriz = fopen("Instancias/7.-10x10.inv", "r");
-    archivoPuntos = fopen("Instancias/7.-10x10.points", "r");
+    archivoMatriz = fopen("Instancias/6.-80x60.inv", "r");
+    archivoPuntos = fopen("Instancias/6.-80x60.points", "r");
     int n = 0;
     int m = 0;
     int i = 0;
@@ -27,6 +29,18 @@ int main(int argc, char* argv[])
         intentos[i] = malloc(2*sizeof(int));
     }
 
+    bool terminado = false;
+    Ambiente* ambiente = NULL;
+    Nodo *nodoInicial = NULL;
+    Nodo *nodoObjetivo = NULL;
+    Restart* guardaRestarts = NULL;
+    Iteracion* it = NULL;
+    Camino* caminoInicial = NULL;
+    Camino* caminoElegido = NULL;
+
+    clock_t start, end;
+    double cpu_time_used;
+
     ///----------------------DEFINE LA MATRIZ---------------------
     if(archivoMatriz != NULL){
         fscanf(archivoMatriz, "%d %d", &n, &m);
@@ -36,20 +50,17 @@ int main(int argc, char* argv[])
         for (i=0; i<n; i++){
             matrizInitialization[i]=malloc(m*sizeof(int));
         }
-
         for (i=0; i<n; i++){
             for(j=0; j<m; j++){
                 if(!fscanf(archivoMatriz, "%d", &matrizInitialization[i][j])){
                     break;
-                }/*if(j == 0){
-                    printf("\n");
                 }
-                printf("%d ", matrizInitialization[i][j]);*/
             }
         }
         fclose(archivoMatriz);
     } else {
         printf("\nImpossible de abrir\n");
+        return 1;
     }
 
     ///------------------DEFINE LOS TRES INTENTOS----------------
@@ -64,15 +75,13 @@ int main(int argc, char* argv[])
                     intentos[i][j] = *c;
                 } else {
                     break;
-                }if(j == 0){
-                    printf("\n");
                 }
-                visualizarCoordenadas(intentos[i][j]);
             }
         }
         //fclose(archivoPuntos);
     } else {
         printf("\n\nImpossible de abrir\n");
+        return 1;
     }
 
     ///-----------------------------------------------------------------------------------------------------------
@@ -81,110 +90,111 @@ int main(int argc, char* argv[])
 
     printf("\n\n------------------------- PRINCIPIO DE HILL CLIMBING --------------------");
 
-    bool terminado = false;
-    Ambiente* ambiente = NULL;
-    Nodo *nodoInicial = NULL;
-    Nodo *nodoObjetivo = NULL;
-    Restart* guardaRestarts = NULL;
-    Iteracion* it = NULL;
-    Camino* caminoInicial = NULL;
-    Camino* caminoElegido = NULL;
-
     for(i=0; i<3; i++){
-        printf("\n\n\n%d) Pareja de puntos : Inicio=(%d,%d), Objetivo=(%d,%d) ",i+1, intentos[i][0].x, intentos[i][0].y, intentos[i][1].x, intentos[i][1].y );
+        printf("\n\n\n---------------------------------------------------\n");
+        printf("%d) Pareja de puntos : Inicio=(%d,%d), Objetivo=(%d,%d) ",i+1, intentos[i][0].x, intentos[i][0].y, intentos[i][1].x, intentos[i][1].y );
+        printf("\n---------------------------------------------------");
 
         if(matrizInitialization[intentos[i][0].x][intentos[i][0].y] == 1){
             printf("\n No se puede buscar un camino, la casilla de inicio es un obstaculo");
-            free(intentos);
-            free(matrizInitialization);
-            break;
-        }
-        if(matrizInitialization[intentos[i][1].x][intentos[i][1].y] == 1){
+        } else if(matrizInitialization[intentos[i][1].x][intentos[i][1].y] == 1){
             printf("\n No se puede buscar un camino, la casilla objetivo es un obstaculo");
-            free(intentos);
-            free(matrizInitialization);
-            break;
-        }
+        } else if(intentos[i][1].x > n || intentos[i][1].y > m){
+            printf("\n No se puede buscar un camino, la casilla de inicio no esta en la matriz");
+        } else if(intentos[i][1].x > n || intentos[i][1].y > m){
+            printf("\n No se puede buscar un camino, la casilla objetivo no esta en la matriz");
+        }else {
+            ///--------------------Crear el ambiente---------------
 
-        ///--------------------Crear el ambiente---------------
-        printf("\n\n\n       a) Construir el ambiente ");
-        ambiente = crearAmbiente(n, m, matrizInitialization, &intentos[i][0], &intentos[i][1]);
-        visualizarAmbiente(ambiente);
-        nodoInicial = &ambiente->matriz[intentos[i][0].x][intentos[i][0].y];
-        nodoObjetivo = &ambiente->matriz[intentos[i][1].x][intentos[i][1].y];
-        printf("\n El costo optimizado :  %d", nodoInicial->costo);
+            start = clock();
 
-        guardaRestarts = crearRestart();
-        for(j=0;j<RESTRART;j++){
-            if(j>0) {
-                printf("\n\n\n RE-START !!! ");
+            printf("\n\n\n       a) Construir el ambiente ");
+            ambiente = crearAmbiente(n, m, matrizInitialization, &intentos[i][0], &intentos[i][1]);
+            if(n==10 && m==10){
+                ///visualizamos el ambiente solamente si la matriz es chica.
+                visualizarAmbiente(ambiente);
             }
-            ///--------------------Crear la solucion initial----------------
-            printf("\n\n\n       b) Construir la solucion initial");
-            if (nodoInicial->costo == -1){
-                printf("\n No hay solucion possible ! ");
-                break;
+            nodoInicial = &ambiente->matriz[intentos[i][0].x][intentos[i][0].y];
+            nodoObjetivo = &ambiente->matriz[intentos[i][1].x][intentos[i][1].y];
+
+            guardaRestarts = crearRestart();
+            for(j=0;j<RESTRART;j++){
+                if(j>0) {
+                    printf("\n\n\n -------------------- RE-START !!! -------------------");
+                }
+                ///--------------------Crear la solucion initial----------------
+                printf("\n\n\n       b) Construir la solucion initial");
+
+                it = crearIteracion(1);
+                caminoInicial = crearCamino();
+                int r = 0;
+                crearSolucionInitial(ambiente, nodoInicial, nodoObjetivo, caminoInicial, r);
+                definirSolucionInicial(caminoInicial, it);
+                demarcarNodos(ambiente);
+                printf("\n Solucion Initial : ");
+                //visualizarCamino(caminoInicial);
+                printf("largo = %d", caminoInicial->largo);
+                printf("\n El costo optimizado :  %d", nodoInicial->costo);
+
+                ///---------------------Iteraciones de Hill Climbing------------------------
+                terminado = false;
+                while(!terminado){
+                    //visualizarIteracion(it);
+                    printf("\n\n\n       c) Construir el vecindario");
+                    if(it->numero == NUM_MAX_IT){
+                        printf("\nUltima iteracion");
+                        terminado = true;
+                    }
+                    int k;
+                    for(k=1;k<= NUMERO_DE_VECINO; k++){
+                        Camino* nuevoVecino = crearCamino();
+                        crearVecino(k, it->solucionActual, nuevoVecino);
+                        sumarVecino(nuevoVecino, it);
+                    }
+                    visualizarIteracion(it);
+
+                    printf("\n\n\n       d) Elegir el vecino : mejor mejora");
+                    caminoElegido = mejorMejora(it);
+                    if(caminoElegido != NULL){
+                        elegirSolucionActual(caminoElegido, it);
+                        printf("\n Nueva solucion : ");
+                        printf("largo = %d", it->solucionActual->largo);
+                        //visualizarCamino(it->solucionActual);
+                    } else {
+                        printf("\n No hay vecino mejor que la solucion actual ! ");
+                        terminado = true;
+                    }
+                }
+                printf("\n\n Solucion de este restart en %d iteraciones", it->numero-1);
+                //printf("\n Solucion de este restart : ");
+                //visualizarCamino(it->solucionActual);
+                sumarCaminoARestart(guardaRestarts, it->solucionActual);
             }
 
-            it = crearIteracion(1);
-            caminoInicial = crearCamino();
-            int r = 0;
-            crearSolucionInitial(ambiente, nodoInicial, nodoObjetivo, caminoInicial, r);
-            definirSolucionInicial(caminoInicial, it);
-            demarcarNodos(ambiente);
-            printf("\n Solucion Initial : ");
-            visualizarCamino(caminoInicial);
-            printf("\n El costo optimizado :  %d", nodoInicial->costo);
+            printf("\n\n\n       e) SOLUCION FINAL : ");
+            printf("largo = %d", mejorRestart(guardaRestarts)->largo);
+            //visualizarCamino(mejorRestart(guardaRestarts));
 
-            ///---------------------Iteraciones de Hill Climbing------------------------
-            terminado = false;
-            while(!terminado){
-                visualizarIteracion(it);
-                printf("\n\n\n       c) Construir el vecindario");
-                if(it->numero == NUM_MAX_IT){
-                    printf("\nUltimo restart");
-                    terminado = true;
-                }
-                int k;
-                for(k=1;k<= NUMERO_DE_VECINO; k++){
-                    Camino* nuevoVecino = crearCamino();
-                    crearVecino(k, it->solucionActual, nuevoVecino);
-                    sumarVecino(nuevoVecino, it);
-                }
 
-                //construirVecindario(it, NUMERO_DE_VECINO);
-                visualizarIteracion(it);
+            printf("\nLiberar ambiente");
+            liberarAmbiente(ambiente);
+            ambiente = NULL;
 
-                printf("\n\n\n       d) Elegir el vecino : mejor mejora");
-                caminoElegido = mejorMejora(it);
-                if(caminoElegido != NULL){
-                    elegirSolucionActual(caminoElegido, it);
-                    printf("\n ---- Nueva solucion : ");
-                    visualizarCamino(it->solucionActual);
-                } else {
-                    printf("\n No hay vecino mejor que la solucion actual ! ");
-                    terminado = true;
-                }
-                //liberarCamino(caminoElegido);
-                //caminoElegido=NULL;
+            end = clock();
+            cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+            printf("\nEl calculo tomo %f segundos", cpu_time_used);
+
             }
-            printf("\n Solucion de este restart : ");
-            visualizarCamino(it->solucionActual);
-            sumarCaminoARestart(guardaRestarts, it->solucionActual);
-            //printf("\n\nLiberar iteracion");
-            //liberarIteracion(it);
-            //liberarCamino(caminoInicial);
-            //caminoInicial = NULL;
-        }
-
-        printf("\n\n    e) SOLUCION FINAL : ");
-        visualizarCamino(mejorRestart(guardaRestarts));
-
-        printf("\nLiberar ambiente");
-        //liberarAmbiente(ambiente);
-        ambiente = NULL;
     }
 
+    ///----------------------LIBERACION DEL ESPACIO------------------
+    printf("\n\n\n Liberacion del espacio");
+    free(nodoInicial);
+    free(nodoObjetivo);
+    liberarRestart(guardaRestarts);
+    liberarIteracion(it);
+    liberarCamino(caminoInicial);
+    free(caminoElegido);
     free(intentos);
     free(matrizInitialization);
     return 0;

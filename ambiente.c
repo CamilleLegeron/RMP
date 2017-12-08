@@ -23,8 +23,11 @@ Ambiente* crearAmbiente (int n, int m, int** matrizInitial, Coordenadas* c_inici
     a->inicio = &a->matriz[c_inicio->x][c_inicio->y];
     a->objetivo = &a->matriz[c_objetivo->x][c_objetivo->y];
     a->matriz[a->objetivo->x][a->objetivo->y].costo = 1;
-    printf("\n Matriz initilizada, llama la funccion recursiva construirMatriz");
-    construirMatriz(a->matriz, n , m , a->objetivo, 2, i, j);
+    if(n<=100 && m <= 100){
+        ///Para las matrizes mas grandes esta funccion es demasiado compleja
+        printf("\n Llamada de la funccion recursiva construirMatriz");
+        construirMatriz(a->matriz, n , m , a->objetivo, 2, i, j);
+    }
     return a;
 }
 
@@ -83,6 +86,7 @@ void visualizarAmbiente(Ambiente* ambiente){
     }
 }
 
+///Funccion que permite cambiar el color del output
 void SetColor(int ForgC){
     WORD wColor;
 

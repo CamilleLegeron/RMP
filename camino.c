@@ -29,7 +29,7 @@ int sumarNodo(Nodo* nodo, Camino *camino){
         int salida = 0;
         while(salida==0){
             if(n->nodo->x == nodo->x && n->nodo->y == nodo->y){
-                printf("\nEl robot acaba de hacer un ciclo, paso dos veces por el mismo punto");
+                ///El robot acabo de hacer un ciclo, paso dos veces por el mismo punto. Barramos el camino inutil
                 n2 = n;
                 n=n->siguiente;
                 n2->siguiente = NULL;
@@ -61,8 +61,6 @@ void cortarCamino(Camino* camino, Nodo* nodo){
     bool encontrado = false;
     while(!encontrado || n!=NULL){
         if(n->nodo->x == nodo->x && n->nodo->y == nodo->y){
-            visualizarNodo(nodo);
-            visualizarNodo(n->nodo);
             n2 = n;
             n=n->siguiente;
             n2->siguiente = NULL;
@@ -99,7 +97,6 @@ void liberarCamino(Camino*camino){
     while(n!=NULL){
         n2=n;
         n=n->siguiente;
-        //No liberamos el node de n2 porque es un puntero sobre un nodo de la matriz
         free(n2);
     }
     free(camino);

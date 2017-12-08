@@ -1,12 +1,10 @@
 #include "solucion_inicial.h"
 
-//function recursiva
+///function recursiva que permite crear la solucion inicial
 bool crearSolucionInitial(Ambiente* ambiente, Nodo* actual, Nodo* objetivo, Camino* camino, int random){
-    //printf("\n");
     marcarComoVisitado(&ambiente->matriz[actual->x][actual->y]);
     if(actual->x == objetivo->x && actual->y == objetivo->y){
         sumarNodo(actual, camino);
-        //printf("\nTerminado");
         return true;
     }
     Orientacion* orientacionRobot = crearOrientacion();
@@ -15,43 +13,20 @@ bool crearSolucionInitial(Ambiente* ambiente, Nodo* actual, Nodo* objetivo, Cami
 
     Nodo* siguiente;
     if(sumarNodo(actual, camino) == 1){
-        //elegirNuevaDireccion(orientacionRobot);
         siguiente = elegirNuevoSiguiente(actual, ambiente, orientacionRobot, random);
     } else {
         siguiente = &ambiente->matriz[actual->x+orientacionRobot->i][actual->y+orientacionRobot->j];
     }
-    /*printf("\nTest 2: ");
-    int k;
-    for(k=0;k<orientacionRobot->tamanoListReferencia;k++){
-        printf(" %d ", orientacionRobot->listaReferencia[k]);
-    }*/
-    //visualizarCamino(camino);
-    //printf("\n--- Largo del nuevo camino : %d", camino->largo);
-    //Nodo* siguiente = &ambiente->matriz[actual->x+orientacionRobot->i][actual->y+orientacionRobot->j];
     bool terminado = false;
     bool validado = false;
-    //Seguimos si no encontremos el final y que hay que hacer otros intentos
+    ///Seguimos en el caso que no encontramos el final y que hay que hacer otros intentos
     while (!terminado){
-        //Seguimos si el nodo siguiente todavia no esta validado
-        //printf("\n Buscamos el siguiente del nodo actual (%d,%d)",actual->x, actual->y);
+        ///Seguimos si el nodo siguiente todavia no esta validado
         while(!validado){
-            //Estas dos lineas permiten borrar de la lista de referencia la direccion del siguiente, para no volver a probarlo si es que este caso no funciona
             removerEnListaReferencia(orientacionRobot, orientacionRobot->direccion);
-            //printf("\n Intenta direccion %d ", orientacionRobot->direccion);
             if(siguiente->libre){
-                //printf("\nLibre");
                 if(siguiente->visitado){
-                    //printf("\nNodo ya visitado ... ");
-                    visualizarNodo(siguiente);
-                    //Redefinicion del siguiente
-                    /*if(orientacionRobot->tamanoListReferencia == 0) {
-                        //printf("\nNo queda siguiente possible");
-                        return false;
-                    }*/
-                    /*random = rand() %orientacionRobot->tamanoListReferencia;
-                    redefinirOrientacion(orientacionRobot, orientacionRobot->listaReferencia[random]);*/
-                    /*elegirNuevaDireccion(orientacionRobot);
-                    siguiente = &ambiente->matriz[actual->x+orientacionRobot->i][actual->y+orientacionRobot->j];*/
+                    ///Redefinicion del siguiente
                     siguiente = elegirNuevoSiguiente(actual, ambiente, orientacionRobot, random);
                     if (siguiente == NULL){
                         return false;
@@ -60,37 +35,21 @@ bool crearSolucionInitial(Ambiente* ambiente, Nodo* actual, Nodo* objetivo, Cami
                     validado = true;
                 }
             } else {
-                //printf("\nObstaculo");
-                //Redefinicion del siguiente
-                /*if(orientacionRobot->tamanoListReferencia == 0) {
-                    //printf("\nNo queda siguiente possible");
-                    return false;
-                }*/
-                /*random = rand() %orientacionRobot->tamanoListReferencia;
-                redefinirOrientacion(orientacionRobot, orientacionRobot->listaReferencia[random]);*/
-                /*elegirNuevaDireccion(orientacionRobot);
-                siguiente = &ambiente->matriz[actual->x+orientacionRobot->i][actual->y+orientacionRobot->j];*/
+                ///Redefinicion del siguiente
                 siguiente = elegirNuevoSiguiente(actual, ambiente, orientacionRobot, random);
                 if (siguiente == NULL){
                     return false;
                 }
             }
         }
-        //free(orientacionRobot);
-        //return crearSolucionInitial(ambiente, siguiente, objetivo, camino, random);
         if(crearSolucionInitial(ambiente, siguiente, objetivo, camino, random)){
             terminado = true;
         } else {
-            printf("-->REGRESO");
+            ///la funcion retorno un false, el camino se encontro atrapado
             validado = false;
+            ///borramos, del camino, la parte despues de este punto, vamos a buscar otro posibilidad
             cortarCamino(camino, actual);
-            //visualizarCamino(camino);
-            //Redefinicion del siguiente
-            /*random = rand() %orientacionRobot->tamanoListReferencia;
-            redefinirOrientacion(orientacionRobot, orientacionRobot->listaReferencia[random]);*/
-            /*
-            elegirNuevaDireccion(orientacionRobot);
-            siguiente = &ambiente->matriz[actual->x+orientacionRobot->i][actual->y+orientacionRobot->j];*/
+            ///Redefinicion del siguiente
             siguiente = elegirNuevoSiguiente(actual, ambiente, orientacionRobot, random);
             if(siguiente == NULL){
                 return false;
@@ -112,29 +71,16 @@ void demarcarNodos (Ambiente* ambiente){
 
 Nodo* elegirNuevoSiguiente(Nodo* actual, Ambiente* ambiente, Orientacion* orientacion, int random){
     if(orientacion->tamanoListReferencia == 0) {
-        //printf("\nNo queda siguiente possible");
         return NULL;
     }
     Direccion nuevaDireccion = orientacion->listaReferencia[0];
-    //redefinirOrientacion(orientacion, orientacion->listaReferencia[0]);
-    //int min = ambiente->matriz[actual->x+orientacion->i][actual->y+orientacion->j].costo;
     int min = fabs(orientacion->listaReferencia[0] - orientacion->direccionIdeal);
-    //la distancia maxima entre dos direcciones es 4.
+    ///la distancia maxima entre dos direcciones es 4.
     if(min>4){min = 8-min;}
 
     int i;
     int tab;
     for(i=1;i<orientacion->tamanoListReferencia;i++){
-        /*redefinirOrientacion(orientacion, orientacion->listaReferencia[i]);
-        tab = ambiente->matriz[actual->x+orientacion->i][actual->y+orientacion->j].costo;
-        if(tab<min && tab >= 0 ){
-                min = tab; nuevaDireccion = orientacion->listaReferencia[i];
-        } else if (tab==min){
-            random = rand() %2;
-            if(random = 1){
-                nuevaDireccion = orientacion->listaReferencia[i];
-            }
-        }*/
         tab = fabs(orientacion->listaReferencia[i] - orientacion->direccionIdeal);
         if(tab>4){tab = 8-tab;}
         if(tab<min){min = tab; nuevaDireccion = orientacion->listaReferencia[i];}

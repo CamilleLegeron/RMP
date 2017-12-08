@@ -8,17 +8,18 @@
 	<stdbool.h>
 	"nodo.h"
 
-1512755479 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\main.c
+1512771238 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\main.c
+	<time.h>
 	"solucion_inicial.h"
 	"hill_climbing.h"
 
 1511971884 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.cpp
 	"camino.h"
 
-1512706482 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.c
+1512770983 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.c
 	"coordenadas.h"
 
-1512706494 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.h
+1512770989 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\coordenadas.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -44,13 +45,13 @@
 	<stdlib.h>
 	<stdbool.h>
 
-1512750952 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.c
+1512770890 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\camino.c
 	"camino.h"
 
 1512747314 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\nodo.c
 	"nodo.h"
 
-1512706443 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.c
+1512770666 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.c
 	"ambiente.h"
 
 1512661868 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\ambiente.h
@@ -91,10 +92,10 @@
 	<math.h>
 	"camino.h"
 
-1512755605 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\solucion_inicial.c
+1512770795 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\solucion_inicial.c
 	"solucion_inicial.h"
 
-1512754384 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\hill_climbing.c
+1512770977 source:d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\hill_climbing.c
 	"hill_climbing.h"
 
 1512755554 d:\documents\utc\gi05\inf295\proyecto\entregable 2\rmp\hill_climbing.h

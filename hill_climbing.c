@@ -27,11 +27,8 @@ void definirSolucionInicial(Camino* camino, Iteracion* iteracion){
 
 void elegirSolucionActual(Camino* camino, Iteracion* iteracion){
     if(iteracion!=NULL){
-        //Camino* c = iteracion->solucionActual;
         iteracion->solucionActual = camino;
-        //liberarCamino(c);
         iteracion->numero++;
-        //liberarVecindario(iteracion);
         iteracion->vecindario = NULL;
     } else {
         printf("La iteracion es NULL");
@@ -39,10 +36,6 @@ void elegirSolucionActual(Camino* camino, Iteracion* iteracion){
 }
 
 void crearVecino(int numeroVecino, Camino* caminoInicial, Camino* vecino){
-    //printf("\n En vecino %d", numeroVecino);
-    //printf("\n EL CAMINO INICIAL ES ::: ");
-    //visualizarCamino(caminoInicial);
-    //Camino* vecino = crearCamino();
     LV_Nodo* n = caminoInicial->primero;
     LV_Nodo* n2 = n;
     LV_Nodo* n_tamp = NULL;
@@ -54,7 +47,7 @@ void crearVecino(int numeroVecino, Camino* caminoInicial, Camino* vecino){
     while(n!=NULL){
         sumarNodo(n2->nodo, vecino);
         if(fabs(n->nodo->x - n2->nodo->x)<2 && fabs(n->nodo->y - n2->nodo->y)<2){
-            printf("\nLos dos nodos n=(%d,%d) y n2=(%d,%d) son vecinos, el camino puede ser mas corto", n->nodo->x, n->nodo->y, n2->nodo->x,  n2->nodo->y);
+            //printf("\nLos dos nodos n=(%d,%d) y n2=(%d,%d) son vecinos, el camino puede ser mas corto", n->nodo->x, n->nodo->y, n2->nodo->x,  n2->nodo->y);
             n_tamp = n;
             while(n2!=n_tamp){
                 n=n->siguiente;
@@ -159,14 +152,16 @@ Camino* mejorRestart(Restart* r){
 void visualizarIteracion(Iteracion* it){
     printf("\n\nIteracion %d \n", it->numero);
     printf("\nSolucion actual : ");
-    visualizarCamino(it->solucionActual);
+    printf(" largo = %d", it->solucionActual->largo);
+    //visualizarCamino(it->solucionActual);
     printf("\nVecindario : ");
     Camino* c = it->vecindario;
     if(c!=NULL){
         int i = 1;
         while(c!=NULL){
-            printf("\n-Vecino %d", i);
-            visualizarCamino(c);
+            printf("\n-Vecino %d : ", i);
+            printf(" largo = %d", c->largo);
+            //visualizarCamino(c);
             c = c->siguiente;
             i++;
         }
