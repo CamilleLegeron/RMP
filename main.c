@@ -1,4 +1,5 @@
 #include <time.h>
+#include <string.h>
 
 #include "solucion_inicial.h"
 #include "hill_climbing.h"
@@ -17,8 +18,13 @@ int main(int argc, char* argv[])
     ///-------------------INITIALIZACIONES---------------
     FILE* archivoMatriz = NULL;
     FILE* archivoPuntos = NULL;
-    archivoMatriz = fopen("Instancias/6.-80x60.inv", "r");
-    archivoPuntos = fopen("Instancias/6.-80x60.points", "r");
+
+    char nameMatriz[50] = "Instancias/", namePuntos[50] = "Instancias/";
+    strcat(nameMatriz, argv[1]);
+    strcat(namePuntos, argv[2]);
+    archivoMatriz = fopen(nameMatriz, "r");
+    archivoPuntos = fopen(namePuntos, "r");
+
     int n = 0;
     int m = 0;
     int i = 0;
@@ -172,8 +178,11 @@ int main(int argc, char* argv[])
             }
 
             printf("\n\n\n       e) SOLUCION FINAL : ");
-            printf("largo = %d", mejorRestart(guardaRestarts)->largo);
-            //visualizarCamino(mejorRestart(guardaRestarts));
+            if(mejorRestart(guardaRestarts)->largo > 100){
+                printf("largo = %d", mejorRestart(guardaRestarts)->largo);
+            } else {
+                visualizarCamino(mejorRestart(guardaRestarts));
+            }
 
 
             printf("\nLiberar ambiente");
@@ -183,8 +192,7 @@ int main(int argc, char* argv[])
             end = clock();
             cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
             printf("\nEl calculo tomo %f segundos", cpu_time_used);
-
-            }
+        }
     }
 
     ///----------------------LIBERACION DEL ESPACIO------------------

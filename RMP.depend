@@ -105,3 +105,64 @@
 	<math.h>
 	"camino.h"
 
+1512770666 source:d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\ambiente.c
+	"ambiente.h"
+
+1512832638 d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\ambiente.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"camino.h"
+	"coordenadas.h"
+
+1512750962 d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\camino.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"nodo.h"
+
+1512703623 d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\nodo.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1512770989 d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\coordenadas.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1512770890 source:d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\camino.c
+	"camino.h"
+
+1512770983 source:d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\coordenadas.c
+	"coordenadas.h"
+
+1512770977 source:d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\hill_climbing.c
+	"hill_climbing.h"
+
+1512755554 d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\hill_climbing.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+	"camino.h"
+
+1512771238 source:d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\main.c
+	<time.h>
+	"solucion_inicial.h"
+	"hill_climbing.h"
+
+1512703662 d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\solucion_inicial.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<time.h>
+	<math.h>
+	"ambiente.h"
+
+1512747314 source:d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\nodo.c
+	"nodo.h"
+
+1512770795 source:d:\documents\utc\gi05\inf295\proyecto\entregable2\rmp\solucion_inicial.c
+	"solucion_inicial.h"
+

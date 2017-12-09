@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <windows.h>
-#include <dos.h>
-#include <dir.h>
 
 #include "camino.h"
 #include "coordenadas.h"
